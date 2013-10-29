@@ -9,7 +9,7 @@
 # Readme: ../OSINTharvest/Readme.txt
 
 # Import libs
-import subprocess
+import subprocess       # needed to launch external modules
 
 # Set variables
 LISTharvest = 'modules/LISTharvest.py'
@@ -18,7 +18,7 @@ PDFharvest = 'modules/PDFharvest.py'
 
 
 # The cli menu
-ans = True #variable for tracking user choice
+ans = True      #variable for tracking user choice
 print("""
 ________    _________.___ __________________                            
 \       \  /   _____/|   |\      \__    ___/                            
@@ -45,19 +45,19 @@ ________    _________.___ __________________
 
 while ans:
         try:
-                ans= input("Select a module to launch:  ")
+                ans= input("Select a module to launch: ")
         
                 if ans == 1:
-                    subprocess.call("modules/LISTharvest.py")
+                    subprocess.call("modules/LISTharvest.py")   # launches LISTharvest
                     
                 elif ans == 2:
-                    subprocess.call("modules/WEBharvest.py")
+                    subprocess.call("modules/WEBharvest.py")    # launches WEBharvest
                    
                 elif ans == 3:
-                    subprocess.call("modules/PDFharvest.py")
+                    subprocess.call("modules/PDFharvest.py")    # launches PDFharvest
                 
                 elif ans == 0:
-                    print("now exiting..")
+                    print("now exiting..")                      # exits
                     break
                 
                 
@@ -77,8 +77,3 @@ while ans:
                 print("  exiting")
                 break
         
-
-
-
-# how to exec
-# subprocess.call("modules/LISTharvest.py", shell=True)

@@ -9,26 +9,33 @@
 # Readme: ../OSINTharvest/Readme.txt
 
 # Import the libs
-import os
-import datetime
-import urllib
+import os           # Needed for download paths
+import datetime     # Needed for timestamps in logs
+import urllib       # Needed for downloads
 
 # Set output directory
-OUTPUT_DIR = 'output/LISTharvest/' # location of downloaded lists..
-SOURCELIST = 'sources/LISTharvest_sources.txt' # self explanatory..
-LOGFILE    = 'logs/LISTharvest.log' # incase shit goes south..
+OUTPUT_DIR = 'output/LISTharvest/'              # location of downloads
+SOURCELIST = 'sources/LISTharvest_sources.txt'  # defined sources in text file
+LOGFILE    = 'logs/OSINTharvest.log'            # logging output
+
+# to be uncommented during testing as not to write logs to repo
+# LOGFILE   = 'xxx.log'
+
 
 # Open up the log file, write the header
 f = open(LOGFILE, 'w')
-f.write("OSINTharvest v0.1\nAuthor: Chimera Security\n\nInitiating logging...\n")
 
-print("Running LISTharvest. Please wait..")
+# write the module launch to log w/timestamp
+f.write( now.strftime("%Y-%m-%d %H:%M:%S") + " - LISTharvest" + " - Module launched")
+
+# print launch message
+print("Launching LISTharvest. Please wait..")
+
 # For every line in the source, do the following
 for source in open(SOURCELIST):
 
-    # Create the timestamp and present dl start info
+    # Define <now>
     now = datetime.datetime.today()
-    f.write( now.strftime("%Y-%m-%d %H:%M:%S") + " - Initiating Download: " + source)
     
     # Grab the filename from the source list
     name = source.rsplit(',', 1)[-1]
@@ -41,12 +48,16 @@ for source in open(SOURCELIST):
     
     # Download
     urllib.urlretrieve(url, filename)
-    #print( now.strftime("%Y-%m-%d %H:%M:%S") + " - Download Complete: " + name)
     
     # Show outcome of download
-    f.write( now.strftime("%Y-%m-%d %H:%M:%S") + " - Download Successful: " + name)
+    f.write( now.strftime("%Y-%m-%d %H:%M:%S") + " - LISTharvest" + " - Download Successful: " + name)
 
     
 # Show overall outcome of script
 print("===================================\nAll downloads completed successfully\n")
+
+# write out completion entry to log
+f.write( now.strftime("%Y-%m-%d %H:%M:%S") + " - LISTharvest" + " - All downloads complete")
+
+# close the log file
 f.close()    
