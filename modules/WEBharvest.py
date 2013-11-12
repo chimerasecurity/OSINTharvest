@@ -13,19 +13,17 @@ import re           # required for regex
 import urllib2      # required for http
 import datetime     # required for timestmps
 import os
-import csv
 
-OUTPUT_FILE = '../output/WEBharvest/results.csv'   # Output directory
+OUTPUT_FILE = '../output/WEBharvest/results.txt'   # Output directory
 SOURCELIST = '../sources/WEBharvest_sources.txt'   # Sourcelist
 LOGFILE = '../logs/OSINTharvest.log'               # logs
-now = datetime.datetime.today()
+now = datetime.datetime.today()                    # Define NOW
 
 # Determine regex for IP / HNAMEs
 IP = r"\b(?:(?:25[0-5]|2[0-4]\d|[01]?\d\d?)\.){3}(?:25[0-5]|2[0-4]\d|[01]?\d\d?)\b"
 
-# Open up the log file, write the header
-f = open(LOGFILE, 'w')
-
+f = open(LOGFILE, 'w')      # Open up the log file
+g = open(OUTPUT_FILE, 'w')  # output file
 
 # write the module launch to log w/timestamp
 f.write( now.strftime("%Y-%m-%d %H:%M:%S") + " - WEBharvest" + " - Module launched")
@@ -39,9 +37,6 @@ for source in open(SOURCELIST):
     # Define <now>
     now = datetime.datetime.today()
     
-    # Grab the filename from the source list
-    name = source.rsplit(',', 1)[-1]
-    
     # Define the url
     url = source.rsplit(',', 1)[-0]
     
@@ -51,12 +46,14 @@ for source in open(SOURCELIST):
     
     # search and print matching strings
     result = re.compile(IP)
-    h = result.findall(data)
+    scrape = result.findall(data)
     
-    csv.writer(open(OUTPUT_FILE, 'wb')).writerows(h)
+    print scrape
     
+    #g.writelines(scrape)
+
     # Show outcome of download
-    f.write( now.strftime("%Y-%m-%d %H:%M:%S") + " - WEBharvest" + " - Scrape Successful: " + name)
+    f.write( now.strftime("%Y-%m-%d %H:%M:%S") + " - WEBharvest" + " - Scrape Successful")
 
 
 
